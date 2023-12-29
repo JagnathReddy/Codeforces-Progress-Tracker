@@ -1,0 +1,38 @@
+{
+  "manifest_version": 3,
+  "name": "Timer",
+  "description": "Timer on your problems",
+  "version": "1.0",
+  "options_page": "",
+  "action": {
+    "default_popup": "hello.html",
+    "default_icon": "image.png"
+  },
+  "icons": {
+    "16": "images/icon-16.png",
+    "32": "images/icon-32.png",
+    "48": "images/icon-48.png",
+    "128": "images/icon-128.png"
+  },
+  "content_scripts": [
+    {
+      "js": ["scripts/checkSubmission.js"],
+      "css":["css/alert.css"],
+      "matches": [
+        "https://codeforces.com/problemset/status?my=on"
+      ]
+    },
+    {
+      "js":["scripts/problemScript.js"],
+      "matches":[
+        "https://codeforces.com/problemset/problem/*",
+        "https://codeforces.com/contest/"
+      ]
+    }
+  ],
+  "background": {
+    "service_worker": "scripts/service-worker.js",
+    "type": "module"
+  },
+  "permissions": ["unlimitedStorage","storage","scripting"]
+}
