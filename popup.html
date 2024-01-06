@@ -1,0 +1,101 @@
+<html>
+  <head>
+    <style>      
+    .housing{
+      width:200px;
+      font-family: "Poppins", sans-serif;
+      display:flex;
+      flex-direction: column;
+        border-radius: 12px;
+        background: #fff;
+        padding: 20px 35px 20px 25px;
+        box-shadow: 0 6px 20px -5px rgba(0, 0, 0, 0.1);
+      align-items:center;
+      background-color:#4070f4;
+    }
+    .housing .banner{
+        font-size: 22px;
+        font-weight: 600;
+        color: #333;
+      display:inline;
+    }
+    
+    .innerBox{
+      margin:10px;
+      padding:10px;
+    /*   width:100%; */
+      height:100%;
+      background-color:#fff;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      box-shadow:0px 0px 10px black
+    }
+    
+    .buttonCFT{
+      margin:10px;
+      padding:10px;
+        border:2px solid blue;
+        font-size: 16px;
+        font-weight: 600;
+        color: #333;
+        cursor:pointer;
+    }  
+    
+    a{
+      cursor:pointer;
+    }
+        
+    #message{
+      font-family: "Poppins", sans-serif;
+      font-size: 12px;
+      display: none;
+    }
+        
+    .sheetIn form{
+      display:grid;
+      grid-template-columns:3fr 1fr;
+      grid-gap:2%;
+    }
+    .sheetIn{
+      padding:10px;
+      display: none;
+    }
+    .sheetIn button{
+      padding:5px;
+        border:2px solid blue;
+        font-size: 9px;
+        font-weight: 600;
+        color: #333;
+        cursor:pointer;
+    }
+    .sheetIn input{
+      font-family: "Poppins", sans-serif;
+      font-size:9px;
+    }
+    #sheet{
+      display: none;
+    }
+    </style>
+  </head>
+  <body>
+    <div class="housing">
+    <span class="banner">CF Progress Tracker</span>
+    <div class="innerBox">
+      <span id="message">Looks like you haven't set a google sheet ID , you can add it <a>here</a> </span>
+      <div class="sheetIn" id="sheetIn">
+        <form>
+          <input id="sheetLink"></input>
+          <button id="sheetbtn" type="submit">Update!</button>
+        </form>
+      </div>
+        <button class="buttonCFT" id="sheet">Sheet</button>
+        <button class="buttonCFT" id="json">Download json</button>
+        <button class="buttonCFT" id="csv">Download csv</button>
+    </div>
+    <p>edit sheet link <a id="editLink">here</a></p>
+    <i>Reach out to me <a id="linkedin">here!</a></i>
+  </div>
+  <script src="popup.js"></script>
+  </body>
+</html>
