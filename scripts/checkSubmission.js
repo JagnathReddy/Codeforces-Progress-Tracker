@@ -1,12 +1,12 @@
 let recentSubmissions = document.querySelector(".status-frame-datatable tbody").children[1].querySelector(".status-cell");
-let html=
+let htmlString=
 `<div class="toast">
 <div class="toast-content">
   <i class="fas fa-solid fa-check check"></i>
   <div class="message">
     <span class="text text-1">Accecpted</span>
-    <span class="text text-2">you took x minutes to solve this problem</span>
-    <span class="text text-2">Updating spreadsheet...</span>
+    <span class="text text-2">Click the input field to halt auto-update</span>
+    <span class="text text-2">If left unattended, updates will occur without a remark.</span>
     </div>
     </div>
 <div class="interaction">
@@ -17,7 +17,7 @@ let html=
 `
 
 let toast=document.createElement('div');
-toast.innerHTML=html;
+toast.innerHTML=htmlString;
 toast=toast.firstChild;
 let progress=toast.querySelector('.progress')
 let remark=toast.querySelector("#remarkArea");
@@ -30,12 +30,23 @@ const callback = (mutationList, observer) => {
     if (recentSubmissions.querySelector(".verdict-accepted")) {
         toast.classList.add("active");
         progress.classList.add("active");
-        timer1 = setTimeout(() => {
+        timer1=setTimeout(()=>{
+          toast.classList.remove("active");
+          update();
+        },5000)
+        timer2=setTimeout(()=>{
+            progress.classList.remove('active');
+        },5300)
+        remark.onfocus=function(){
+            clearTimeout(timer1);
+            clearTimeout(timer2);
+        }
+        toast.querySelector(".update").addEventListener("click",()=>{
+            update();
             toast.classList.remove("active");
-        }, 5000);
-        timer2 = setTimeout(() => {
-            progress.classList.remove("active");
-        }, 5300);
+            progress.classList.remove('active');
+        })
+
     }
 };
 
@@ -69,28 +80,20 @@ function downloadObjectAsJson(exportObj, exportName){
 //     console.log(response);
 //   })();
 
-toast.classList.add("active");
-progress.classList.add("active");
-timer1=setTimeout(()=>{
-  toast.classList.remove("active");
-  update();
-},5000)
-timer2=setTimeout(()=>{
-    progress.classList.remove('active');
-},5300)
-remark.onfocus=function(){
-    clearTimeout(timer1);
-    clearTimeout(timer2);
-}
-toast.querySelector(".update").addEventListener("click",update)
 
 async function update() {
     const request={}    
     let problemName = document.querySelector(".status-frame-datatable tbody").children[1].querySelector('[data-problemid]').children[0].innerHTML;
-    let problem={
-        contest:problemName.match(/\d+/)[0],
-        problem:problemName.match(/[A-Z]\d?/)[0]
+    let problem={}
+    try {
+        problem.contest=problemName.match(/\d+/)[0],
+        problem.problem=problemName.match(/[A-Z]\d?/)[0]
+    } catch (error) {
+        problem.contest=window.location.href.match(/\d+/)[0];
+        problem.problem=problemName.match(/[A-Z]\d?/)[0]
+    
     }
+    
     request.type="problemAccepted";
     request.problem=problem;
     request.remark=document.querySelector("#remarkArea").value;
@@ -120,3 +123,23 @@ async function getTags(problem){
             rating,tags:realTags
         }
 }
+
+
+toast.classList.add("active");
+        progress.classList.add("active");
+        timer1=setTimeout(()=>{
+          toast.classList.remove("active");
+          update();
+        },5000)
+        timer2=setTimeout(()=>{
+            progress.classList.remove('active');
+        },5300)
+        remark.onfocus=function(){
+            clearTimeout(timer1);
+            clearTimeout(timer2);
+        }
+        toast.querySelector(".update").addEventListener("click",()=>{
+            update();
+            toast.classList.remove("active");
+            progress.classList.remove('active');
+        })

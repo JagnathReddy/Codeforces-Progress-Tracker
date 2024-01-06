@@ -37,6 +37,8 @@ checkLink();
 
 document.getElementById("editLink").addEventListener("click", () => {
     document.getElementById("sheetIn").style.display = "block";
+    document.getElementById("message2").style.display = "block";
+    
     chrome.storage.local.get(["sheetId"]).then((data) => {
         document.getElementById("sheetLink").value=data["sheetId"];
     })

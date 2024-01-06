@@ -23,7 +23,6 @@
     .innerBox{
       margin:10px;
       padding:10px;
-    /*   width:100%; */
       height:100%;
       background-color:#fff;
       display:flex;
@@ -46,12 +45,11 @@
       cursor:pointer;
     }
         
-    #message{
+    .message{
       font-family: "Poppins", sans-serif;
       font-size: 12px;
       display: none;
     }
-        
     .sheetIn form{
       display:grid;
       grid-template-columns:3fr 1fr;
@@ -82,7 +80,8 @@
     <div class="housing">
     <span class="banner">CF Progress Tracker</span>
     <div class="innerBox">
-      <span id="message">Looks like you haven't set a google sheet ID , you can add it <a>here</a> </span>
+      <span class="message" id="message">Looks like you haven't set a google sheet ID , you can add it <a>here</a> </span>
+      <span class="message" id="message2">Add google sheets ID</span>
       <div class="sheetIn" id="sheetIn">
         <form>
           <input id="sheetLink"></input>
@@ -93,7 +92,7 @@
         <button class="buttonCFT" id="json">Download json</button>
         <button class="buttonCFT" id="csv">Download csv</button>
     </div>
-    <p>edit sheet link <a id="editLink">here</a></p>
+    <p style="font-size: 13px;">edit sheet link <a id="editLink">here</a></p>
     <i>Reach out to me <a id="linkedin">here!</a></i>
   </div>
   <script src="popup.js"></script>
