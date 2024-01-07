@@ -27,7 +27,7 @@
       "js":["scripts/problemScript.js"],
       "matches":[
         "https://codeforces.com/problemset/problem/*",
-        "https://codeforces.com/contest/*"
+        "https://codeforces.com/contest/*/problem/*"
       ]
     }
   ],
