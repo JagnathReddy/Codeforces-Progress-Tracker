@@ -1,19 +1,14 @@
 
 chrome.runtime.onMessage.addListener(
   function (request, sender, sendResponse) {
-    console.log(request);
     var responseStatus = { bCalled: false };
     if (request.type == "problemGet") {
       getStartTime(request.problem).then((value) => {
-        console.log(value+"herererrere");
         sendResponse({ "time": value });
-        console.log("value sent 1");
         responseStatus.bCalled= true;
       });
-      console.log("value sent 2");
       return true  //Asynchronously call sendResponse=> return true
     } else if (request.type == "problemSet") {
-      console.log("set problem req");
       setStartTime(request.problem, request.time);
       sendResponse({ "success": true });
     } else if(request.type == "problemAccepted") {
@@ -22,7 +17,6 @@ chrome.runtime.onMessage.addListener(
       //request.problemDetails={rating,tags:[]}
       //request.submissionLink=""
       //get start time 
-      console.log(request); 
       responseStatus.bCalled= true;
       getStartTime(request.problem).then(startTime => {
         if (startTime == -1) {
@@ -30,7 +24,6 @@ chrome.runtime.onMessage.addListener(
           return;
         }
         const totalTime = convertMillis(Date.now() - startTime);
-        console.log(totalTime);
         const totalTimeString = `${totalTime.hour}:${totalTime.min}:${totalTime.sec}`;
         const temp = [[]];
         temp[0].push(request.problem.contest + request.problem.problem);
@@ -40,14 +33,12 @@ chrome.runtime.onMessage.addListener(
         temp[0].push(request.submissionLink);
         temp[0].push(request.remark);
         temp[0].push((new Date()).toLocaleString());
-        console.log(temp);
         let req = {};
         chrome.storage.local.get(["sheetId"]).then((id) => {
-          console.log(id)
           req.id=id["sheetId"];
           req.data = temp;
-          console.log(req);
-          fetch("https://script.google.com/macros/s/AKfycbw0iGxPdJG-_qKlyoJLoeTCDJfjINta3xzAxIvXlMmZyXdfKmyu6ZGpAcsOGJzWbkQg0w/exec", {
+          fetch("https://script.google.com/macros/s/AKfycbz-gDU8F-OyNWOkbIDQDMft4QBequgK4IPY-E7Zidr7QsvotEjn-PPYEG8pfgQsoIgmTA/exec", {
+            
             method: 'POST',
             mode: 'no-cors', // Required for CORS issues in Google Apps Script
             headers: {
@@ -61,7 +52,6 @@ chrome.runtime.onMessage.addListener(
             try {
               for(let v of value["solved"]){
                 solved.push(v);
-                console.log(v);
               }
             } catch (error) {
               
@@ -82,7 +72,6 @@ async function getStartTime(problem) {
   //problem={contest,problem}
   //example 1983,B;
   const problemName = problem.contest + problem.problem;
-  console.log(problemName);
   let result = await chrome.storage.local.get([problemName])
   if (result[problemName]) {
     if (!result[problemName].accepted)   //not yet accepted => start timer where left previously
@@ -99,9 +88,7 @@ async function setStartTime(problem, time) {
   const problemName = problem.contest + problem.problem;
   const problemObj = {};
   problemObj[problemName] = { "time": time, "accepted": false };
-  chrome.storage.local.set(problemObj).then(() => {
-    console.log("Value is set");
-  });
+  chrome.storage.local.set(problemObj)
 }
 
 

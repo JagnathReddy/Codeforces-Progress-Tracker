@@ -13,7 +13,6 @@ async function getLink() {
 document.querySelector("#message a").addEventListener("click", () => { document.getElementById("sheetLink").focus(); })
 function checkLink() {
     getLink().then(value => {
-        console.log(value);
         if (value == -1) {
             document.getElementById("message").style.display = "block";
             document.getElementById("sheetIn").style.display = "block";
@@ -38,9 +37,9 @@ checkLink();
 document.getElementById("editLink").addEventListener("click", () => {
     document.getElementById("sheetIn").style.display = "block";
     document.getElementById("message2").style.display = "block";
-    
+
     chrome.storage.local.get(["sheetId"]).then((data) => {
-        document.getElementById("sheetLink").value=data["sheetId"];
+        document.getElementById("sheetLink").value = data["sheetId"];
     })
     document.getElementById("sheetbtn").addEventListener("click", () => {
         let obj = { "sheetId": document.getElementById("sheetLink").value };
@@ -50,23 +49,22 @@ document.getElementById("editLink").addEventListener("click", () => {
 
 function downloadJSON() {
     chrome.storage.local.get(["solved"]).then(data => {
-        console.log(data["solved"]);
         const aTag = document.createElement('a');
         let dataString = "data:text/json;charset=utf-8," + JSON.stringify(data["solved"]);
         aTag.setAttribute('href', dataString);
         aTag.setAttribute('download', "data.json");
+        document.body.appendChild(aTag); // required for firefox
         aTag.click();
         aTag.remove();
     })
 }
 
-document.getElementById("linkedin").addEventListener("click", ()=>{
+document.getElementById("linkedin").addEventListener("click", () => {
     chrome.tabs.create({ 'url': `https://www.linkedin.com/in/jagnath-reddy/` });
 })
 
 function downloadCSV() {
     chrome.storage.local.get(["solved"]).then(data => {
-        console.log(data["solved"]);
         const aTag = document.createElement('a');
         let csvString = "Problem,Rating,Tags,Time Taken,Link,Remark,Date Time\n"
         for (let value of data["solved"]) {
@@ -78,6 +76,7 @@ function downloadCSV() {
         let dataString = "data:text/csv;charset=utf-8," + csvString;
         aTag.setAttribute('href', dataString);
         aTag.setAttribute('download', "data.csv");
+        document.body.appendChild(aTag); // required for firefox
         aTag.click();
         aTag.remove();
     })

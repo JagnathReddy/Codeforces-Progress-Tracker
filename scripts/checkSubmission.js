@@ -68,18 +68,6 @@ function downloadObjectAsJson(exportObj, exportName){
     downloadAnchorNode.remove();
   }
 
-// (async () => {
-    // let problemName = document.querySelector(".status-frame-datatable tbody").children[1].querySelector('[data-problemid]').children[0].innerHTML;
-    // let problem={
-    //     contest:problemName.match(/\d+/)[0],
-    //     problem:problemName.match(/[A-Z]\d?/)[0]
-    // }
-//     downloadObjectAsJson(problem,"problem")
-//     const response = await chrome.runtime.sendMessage(problem);
-//     // do something with response here, not outside the function
-//     console.log(response);
-//   })();
-
 
 async function update() {
     const request={}    
@@ -124,22 +112,3 @@ async function getTags(problem){
         }
 }
 
-
-toast.classList.add("active");
-        progress.classList.add("active");
-        timer1=setTimeout(()=>{
-          toast.classList.remove("active");
-          update();
-        },5000)
-        timer2=setTimeout(()=>{
-            progress.classList.remove('active');
-        },5300)
-        remark.onfocus=function(){
-            clearTimeout(timer1);
-            clearTimeout(timer2);
-        }
-        toast.querySelector(".update").addEventListener("click",()=>{
-            update();
-            toast.classList.remove("active");
-            progress.classList.remove('active');
-        })
